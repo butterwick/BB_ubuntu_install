@@ -1,10 +1,26 @@
 # flash ubuntu 13.10 onto BeagleBone v.A6 SD card from Mac OSX 10.7.5
 
-# get image
+# mac drivers
+# http://waxpraxis.tumblr.com/post/16772215153/talking-to-the-beaglebone-with-osx-10-7-lion
+# download and install this
 # on Mac
+cd ~/Downloads
+wget http://www.ftdichip.com/Drivers/VCP/MacOSX/FTDIUSBSerialDriver_v2_2_16.dmg
+# then replace the Info.plist file thusly
+cd /System/Library/Extensions/FTDIUSBSerialDriver.kext/Contents/
+sudo mv Info.plist Info.plist.old
+sudo wget http://dl.dropbox.com/u/511065/beaglebone_ftdi/Info.plist
+sudo chmod 644 Info.plist
+sudo kextutil ../../FTDIUSBSerialDriver.kext
+
+# get ubuntu image
+# on Mac
+cd ~/Downloads
 wget http://s3.armhf.com/debian/saucy/bone/ubuntu-saucy-13.10-armhf-3.8.13-bone30.img.xz
 md5 ubuntu-saucy-13.10-armhf-3.8.13-bone30.img.xz
 # should be 8173dffeaae12421a5542c3578afdd82
+# this img with userland SPI patched in may also be worth a try
+wget http://dl.dropbox.com/u/511065/ubuntu-beaglebone-spi.img.tar.gz
 
 # find location of SD card (here /dev/disk1)
 # on Mac
